@@ -2,7 +2,7 @@
 
 
 function testMax() {
-    return fetch("http://localhost:3000/")
+    return fetch("http://localhost:3000/users")
         .then(data => data.text())
 
 }
@@ -23,55 +23,8 @@ setInterval(async () => {
         testMax(),
         testMax(),
         testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
-        testMax(),
     ])
     const fim = performance.now();
     console.log(fim - init);
-}, 1000);
+    console.log(data);
+}, 100);
