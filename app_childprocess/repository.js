@@ -29,7 +29,7 @@ export class UserRepository {
         return new Promise(async (resolve, reject) => {
             try {
                 const connection = await this.connect();
-                connection.query("select * from users", (err, data) => {
+                connection.query("select * from usuario", (err, data) => {
                     if (err) reject(err);
                     resolve(data)
                 });

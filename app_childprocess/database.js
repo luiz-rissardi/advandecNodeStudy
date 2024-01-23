@@ -12,7 +12,7 @@ export class MySqlDatabase {
             this.#connection = createPool({
                 connectionLimit: 10, // número máximo de conexões no pool
                 host: 'localhost',
-                user: 'Luiz',
+                user: 'luiz',
                 password: '13012006',
                 database: 'users',
             })

@@ -1,7 +1,8 @@
 import { fork } from "child_process";
+import { Readable, Writable } from "stream";
 
 const processes = new Map();
-const MAX_PROCESS = 1;
+const MAX_PROCESS = 3;
 
 
 function startNewProcess() {
@@ -37,9 +38,18 @@ export class UserController {
             const chosenProcessChild = getAvailableProcess();
 
             function handler(data) {
-                res.json(data);
                 chosenProcessChild.removeListener("message", handler);
                 chosenProcessChild.kill();
+                Readable.from(JSON.stringify(data)).pipe(new Writable({
+                    write(chunk,enc,cb){
+                        res.write(chunk.toString());
+                        cb();
+                    },
+                    final(cb){
+                        res.end();
+                        cb();
+                    }
+                }))
             }
 
             chosenProcessChild.on("message", handler);
