@@ -1,68 +1,32 @@
-import { TestNewUuid } from "./newuuid.js";
-import { TestOldUuid } from "./olduuid.js";
+import { createReadStream } from "fs";
+import { Writable, Transform } from "stream";
 import BenchMarking from "benchmark";
+import csv from "csvtojson";
 
 const suite = new BenchMarking.Suite();
-
-const arr = [
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  ,
-  1,
-  11,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  11,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  ,
-  1,
-  1,
-  11,
-  1,
-  ,
-  1,
-  11,
-  1,
-];
-
-const number = "995524777"
-
+const readble = createReadStream("./benchMarking/database.csv")
 suite
-  .add("###withRegex", () => {
-    function soma(a, b) {
-      return a + b
-    }
+  .add("###withTransform", () => {
 
-    const teste = soma(2, 3)
+    readble
+      .pipe(csv())
+      .pipe(new Writable({
+        write(chunk, enc, cb) {
+          const text = chunk.toString();
+          cb()
+        }
+      }))
+
   })
-  .add("###notRegex", () => {
-    function soma(a, b) {
-      return a + b
-    }
-
-    const teste = soma(2, 3)
+  .add("###withoutTransform", async () => {
+    readble
+    .pipe(toJson())
+    .pipe(new Writable({
+      write(chunk, enc, cb) {
+        const text = chunk.toString()
+        cb()
+      }
+    }))
   })
   .on("cycle", (event) => {
     console.log(String(event.target));
@@ -73,5 +37,26 @@ suite
   .run({ "async": true });
 
 
-  const teste = new Map()
 
+
+  function toJson() {
+    let headers
+    return new Transform({
+        transform(chunk, enc, cb) {
+            this.counter = this.counter ?? 0;
+            if(this.counter == 0){
+                headers = chunk.toString().replace("\r","").split(",");
+                this.counter++
+            }
+            const data = chunk.toString().split(",");
+            const obj = {};
+
+            data.forEach((value,index) => {
+                obj[headers[index]] = value;
+            })
+
+            this.push(JSON.stringify(obj));
+            cb()
+        }
+    })
+}

@@ -27,7 +27,6 @@ function initRoutes(controller) {
 }
 
 
-
 function initDependecies() {
   // const database = new MySqlDatabase({connectionString:"mysql://Luiz:13012006@localhost/users"});
   // const connection = database.connect();
