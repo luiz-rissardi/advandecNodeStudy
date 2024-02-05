@@ -44,14 +44,3 @@ export class UserController {
         }
     }
 }
-
-
-
-function* fibonacci(n) {
-    if (n <= 1) {
-        yield n;
-    } else {
-        yield* fibonacci(n - 1);
-        yield n;
-    }
-}

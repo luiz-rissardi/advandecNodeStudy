@@ -10,7 +10,7 @@
     "runAtocannonScript": "node ./app_childprocess/autocannon.js",
     "cluster": "nodemon cluster.js",
     "teste": "nodemon teste.js",
-    "autocannon": "npx autocannon -c 2000 -d 30 --debug http://localhost:4000/users",
+    "autocannon": "npx autocannon -c 5 -20 500 --debug http://localhost:4000/image?image=https://banner2.cleanpng.com/20180325/avw/kisspng-mbt-70-main-battle-tank-t-80-military-tanks-5ab7aaa9ad3e05.7725387315219862177096.jpg&background=https://wallpapers.com/images/hd/battlefield-background-x6shaan524hr7ev7.jpg",
     "memory": "nodemon ./memoryHeapNode/",
     "benchmarking": "node ./benchMarking/index.js",
     "start": "set CLIMEM=9000 && node -r climem ./app_childprocess/server.js",
@@ -25,6 +25,7 @@
   "dependencies": {
     "0x": "^5.7.0",
     "autocannon": "^7.14.0",
+    "axios": "^1.6.7",
     "benchmark": "^2.1.4",
     "climem": "^2.0.0",
     "clinic": "^13.0.0",
@@ -32,6 +33,8 @@
     "express": "^4.18.2",
     "mysql2": "^3.7.0",
     "nodemon": "^3.0.2",
+    "piscina": "^4.3.1",
+    "sharp": "^0.33.2",
     "uuid": "^9.0.1"
   }
 }

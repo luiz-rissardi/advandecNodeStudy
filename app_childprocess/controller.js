@@ -4,27 +4,6 @@ import { Readable } from "stream";
 const processes = new Map();
 const MAX_PROCESS = 2;
 
-const data1 = fork("./app_childprocess/teste.js");
-const data2 = fork("./app_childprocess/teste.js");
-const data3 = fork("./app_childprocess/teste.js");
-
-
-data1.on("message",(data)=>{
-    console.log("data1 =>",data[0]);
-})
-data2.on("message",(data)=>{
-    console.log("data2 =>",data[0]);
-})
-data3.on("message",(data)=>{
-    console.log("data3 =>",data[0]);
-})
-
-setInterval(()=>{
-    data1.send("init");
-    data2.send("init");
-    data3.send("init");
-},1000)
-
 function startNewProcess() {
     const child = fork("./app_childprocess/teste.js");
     processes.set(child.pid, child);

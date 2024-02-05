@@ -6,13 +6,11 @@ import { promisify } from "util";
 
 
 const app = express();
-const asyncLocalStorage = new AsyncLocalStorage();
+const asyncLocalStorage = new AsyncLocalStorage()
 
-asyncLocalStorage.enterWith()
-
-asyncLocalStorage.run({teste:"ola mundo"},()=>{
-    console.log(asyncLocalStorage.getStore());
-})
+// asyncLocalStorage.run({teste:"ola mundo"},()=>{
+//     console.log(asyncLocalStorage.getStore());
+// })
 
 const server = createServer(app);
 app.use(mappedConnection);
