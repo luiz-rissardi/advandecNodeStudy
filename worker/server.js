@@ -16,6 +16,7 @@ export function runServer() {
     });
 }
 
+runServer()
 
 function initRoutes(controller) {
   const routes = Router();

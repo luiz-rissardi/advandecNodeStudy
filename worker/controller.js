@@ -1,42 +1,25 @@
 import { Worker } from "worker_threads";
 
 
-const MAX_WORKERS = 70;
-const workers = new Map();
-
-for (let i=0;i<MAX_WORKERS;i++) {
-    const worker = new Worker("./worker/teste.js",{
-        workerData:{ number:100 }
-    })
-    workers.set(worker.threadId,worker);
-}
-
-function loadBalanceWoker(arr=[],index=0){
-    return function() {
-        if(index >= arr.length) index=0;
-        return arr[index ++];
-    }
-}
-
-const getWorker = loadBalanceWoker([...workers.values()]);
-
+const worker = new Worker("./worker/teste.js")
 
 export class UserController {
 
     async findAll(req, res) {
         try {
+            function handler(result) {
+                worker.removeAllListeners("message");
+                if (!result?.error) {
+                    res.write(String(result));
+                } else {
+                    res.writeHead(500);
+                }
+                res.end()
+            }
 
-            const worker = getWorker();
-            
-            worker.on("message",(value) =>{
-                res.write(String(value));
-                res.end();
-            })
+            worker.on("message",handler)
+            worker.postMessage(100);
 
-            worker.on("error",(err)=>{
-                console.log("errorr =>",err);
-            })
-            worker.postMessage("init");
 
         } catch (error) {
             console.log(error);

@@ -7,31 +7,35 @@ const subWorker1 = new Worker("./workerThreads/subWorker.js");
 function initWorker(worker, image, size) {
     return new Promise((resolve, reject) => {
         const messageHandler = (result) => {
+            worker.removeListener("message",messageHandler);
+            worker.removeListener("message",errorHandler);
             resolve(result);
         };
 
         const errorHandler = (error) => {
+            worker.removeListener("message",messageHandler);
+            worker.removeListener("message",errorHandler);
             reject(error);
         };
-   
-        worker.once("message", messageHandler);
-        worker.once("error", errorHandler);
+
+        worker.on("message", messageHandler);
+        worker.on("error", errorHandler);
         worker.postMessage([image, size]);
     });
 }
 
 async function startProcess(image, background) {
     try {
-        const [result1, result2] = await Promise.all([
+        const [mainImage, backgroundImage] = await Promise.all([
             initWorker(subWorker, image, 300),
             initWorker(subWorker1, background, 800)
         ])
 
-        if (!result1.error && !result2.error) {
-            const finalImage = await sharp(result2.processedImage)
+        if (!mainImage.error && !backgroundImage.error) {
+            const finalImage = await sharp(backgroundImage.processedImage)
                 .composite([
                     {
-                        input: result1.processedImage,
+                        input: mainImage.processedImage,
                         gravity: sharp.gravity.south
                     }
                 ])
@@ -48,5 +52,5 @@ async function startProcess(image, background) {
 
 parentPort.on("message", (data) => {
     const { image, background } = data;
-    startProcess(image, background)
+    startProcess(image, background);
 });

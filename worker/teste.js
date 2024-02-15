@@ -1,4 +1,4 @@
-import { parentPort, workerData } from "worker_threads";
+import { parentPort } from "worker_threads";
 
 function fibonacci(n) {
     if(n == 1) return 1;
@@ -10,8 +10,7 @@ function fibonacci(n) {
     return data
 }
 
-parentPort.on("message", () => {
-    const { number } = workerData;
+parentPort.on("message", (number) => {
     let result = fibonacci(number)
     parentPort.postMessage(result);
 })
