@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "build": "webpack --mode production",
     "APM": "nodemon performAppMonitoring/server.js",
     "APM-EXPRESS": "nodemon performExpressMonitoring/index.js",
     "runAtocannonScript": "node ./app_childprocess/autocannon.js",
@@ -29,7 +30,6 @@
     "benchmark": "^2.1.4",
     "climem": "^2.0.0",
     "clinic": "^13.0.0",
-    "csvtojson": "^2.0.10",
     "express": "^4.18.2",
     "jimp": "^0.22.10",
     "mysql2": "^3.7.0",
@@ -37,5 +37,11 @@
     "piscina": "^4.3.1",
     "sharp": "^0.33.2",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.23.9",
+    "csvtojson": "^2.0.10",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4"
   }
 }

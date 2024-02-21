@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        form {
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        fieldset{
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="form">
+
+        <fieldset>
+            <label for="search"> search item per name: </label>
+            <input type="text" id="search" name="search">
+        </fieldset>
+
+        <fieldset>
+            <label for="file"> insira seu arquivo </label>
+            <input type="file" name="file" id="file">
+        </fieldset>
+
+        <fieldset>
+            <label for="enableWorker"> ativar thread </label>
+            <input type="checkbox" name="enableWorker" id="enableWorker">
+        </fieldset>
+
+        <fieldset>
+            <p id="sizeFile">  </p>
+        </fieldset>
+
+        <fieldset>
+            <label for="progressRead"> porgress: </label>
+            <progress value="0" max="100" id="progressRead"></progress>
+        </fieldset>
+
+        <button type="submit"> enviar </button>
+    </form>
+
+    <script type="module" src="index.js">  </script>
+    <script type="module" src="workers.js"></script>
+</body>
+
+</html>

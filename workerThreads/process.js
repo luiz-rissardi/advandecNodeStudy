@@ -3,6 +3,7 @@ import axios from "axios"
 
 const worker = new Worker("./workerThreads/worker.js");
 
+
 function downloadImage(url) {
     return axios(url, {
         responseType: "arraybuffer"
