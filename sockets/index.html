@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.socket.io/3.1.1/socket.io.min.js"
+        integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <form>
+        <fieldset>
+            <label for="sala">entrar em uma sala</label>
+            <input type="text" id="sala">
+            <button type="button" onclick="enterRoom()"> entrar </button>
+        </fieldset>
+        <fieldset>
+            <label for="msg">mandar msg pra sala</label>
+            <input type="text" id="msg">
+            <button  type="button" onclick="senMessage()"> enviar </button>
+        </fieldset>
+    </form>
+    <script defer>
+        const socket = io.connect("http://localhost:3000/", {
+            path: '/socket.io',
+            transports: ['websocket']
+        });
+
+        socket.on("msg",msg => {
+            console.log(msg);
+        })
+
+        let room
+
+        function enterRoom(){
+            room = document.getElementById("sala").value;
+            socket.emit("enterRoom",room);
+        }
+
+        function senMessage(){
+            const msg = document.getElementById("msg").value;
+            socket.emit("sendMsgToRoom",msg,room)
+        }
+
+    </script>
+</body>
+
+</html>

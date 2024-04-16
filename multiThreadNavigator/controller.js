@@ -1,6 +1,5 @@
 
 
-
 export default class Controller{
 
     #view
