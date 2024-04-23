@@ -19,7 +19,8 @@
     "flame-node": "npx 0x -- node ./workerThreads/index.js",
     "runStream": "nodemon ./testAutocannon/withStream/index.js",
     "runNoStream": "node ./testAutocannon/noStream/index.js",
-    "clinic-doctor": "npx clinic doctor -- node ./workerThreads/index.js"
+    "clinic-doctor": "npx clinic doctor -- node ./workerThreads/index.js",
+    "rtc":"nodemon ./studyWebRTC/index.js"
   },
   "author": "",
   "license": "ISC",

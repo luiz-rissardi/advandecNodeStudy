@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" id="room">
+    <button type="button" id="btn-enter-room"> enter in room </button>
+
+    <fieldset>
+        <label for="message"> message </label>
+        <input type="text" id="message">
+        <button type="button" id="sendMessage" > send Message </button>
+    </fieldset>
+
+    <section id="players">
+        <video id="playerMe" width="300" height="300" autoplay controls="false" ></video>
+    </section>
+
+    <script src="https://cdn.socket.io/3.1.1/socket.io.min.js"
+        integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO"
+        crossorigin="anonymous"></script>
+    <script type="module" src="./js/index.js"></script>
+</body>
+</html>
