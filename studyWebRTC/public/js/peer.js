@@ -7,6 +7,7 @@ export function createPeer(user) {
         }]
     }
     const pc = new RTCPeerConnection(rtcConfiguration);
+    
 
     for (const track of myStream.getTracks()) {
         pc.addTrack(track, myStream);
@@ -20,6 +21,7 @@ export function createPeer(user) {
     }
 
     pc.onicecandidate = function (event) {
+        console.log("candidate");
         if (!event.candidate) {
             return
         }
@@ -49,6 +51,7 @@ function addVideoPlayer(stream) {
 }
 
 export async function createOffer(user) {
+    console.log("offer");
     user.dataChannel = user.peerConnection.createDataChannel("chat");
     const offer = await user.peerConnection.createOffer();
     await user.peerConnection.setLocalDescription(offer);
@@ -60,6 +63,7 @@ export async function createOffer(user) {
 }
 
 export async function answerPeer(user, offer) {
+    console.log("answer 2");
     user.dataChannel = user.peerConnection.createDataChannel("chat")
     await user.peerConnection.setRemoteDescription(offer);
     const answer = await user.peerConnection.createAnswer(offer);

@@ -46,6 +46,7 @@ function initServer(room) {
     })
 
     socket.on("answer", (data) => {
+        console.log("answer");
         const user = users.get(data.id);
         if (user) {
             user.peerConnection.setRemoteDescription(data.answer)
@@ -53,6 +54,7 @@ function initServer(room) {
     })
 
     socket.on("candidate", (data) => {
+        console.log("candidate on");
         const user = users.get(data.id)
         if (user) {
             user.peerConnection.addIceCandidate(data.candidate)
