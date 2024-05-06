@@ -2,6 +2,10 @@ import nodemailer from "nodemailer"
 import { google } from "googleapis"
 import { config } from 'dotenv';
 import path from "path"
+import bodyParse from "body-parser"
+import express, { Router } from "express";
+
+
 
 config({
     path: path.resolve("./googleapis/.env")
@@ -14,6 +18,28 @@ const userAuth = new google.auth.OAuth2(
     process.env.CLIENT_SECRET,
     REDIRECT_URI)
 userAuth.setCredentials({ refresh_token: process.env.REFRESH_TOKEN })
+
+
+const html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email de Confirmação</title>
+</head>
+<body>
+    <h1>Confirmação de Conta</h1>
+    <p>Por favor, clique no botão abaixo para confirmar sua conta:</p>
+    <form id="emailForm" action="http://localhost:3000/teste" method="POST">
+        <label for="email" hidden>Email:</label>
+        <input type="email" id="email" name="email" value="matheus.brito2005@gmail.com" hidden>
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>`
+
 
 async function sendMail() {
     try {
@@ -39,7 +65,7 @@ async function sendMail() {
             to: 'rissardi.luiz2006@gmail.com',
             subject: 'Hello from gmail using API',
             text: 'Hello from gmail email using API',
-            html: '<h1>Hello from gmail email using API</h1>',
+            html: html,
         };
 
         const result = await transport.sendMail(mailOptions);
@@ -49,5 +75,25 @@ async function sendMail() {
     }
 }
 
-const data = await sendMail();
-console.log(data);
+const app = express();
+
+app.use(bodyParse.urlencoded({
+    extended:true
+}))
+
+app.listen(3000, async () => {
+    console.log("server is running at 3000");
+    const data = await sendMail();
+    console.log(data);
+})
+
+const route = Router();
+
+route.route("/teste").post((req, res) => {
+    const data = req.body;
+    console.log(data);
+    res.end("ok")
+})
+
+app.use(route);
+

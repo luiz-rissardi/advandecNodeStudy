@@ -31,6 +31,7 @@
     "autocannon": "^7.14.0",
     "axios": "^1.6.7",
     "benchmark": "^2.1.4",
+    "body-parser": "^1.20.2",
     "cli-progress": "^3.12.0",
     "climem": "^2.0.0",
     "clinic": "^13.0.0",
