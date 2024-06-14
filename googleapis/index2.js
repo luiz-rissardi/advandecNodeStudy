@@ -92,7 +92,7 @@ const route = Router();
 route.route("/teste").post((req, res) => {
     const data = req.body;
     console.log(data);
-    res.end("ok")
+    res.redirect("https://app.brmodeloweb.com/#!/conceptual/661be00dbcd5212168680989")
 })
 
 app.use(route);
