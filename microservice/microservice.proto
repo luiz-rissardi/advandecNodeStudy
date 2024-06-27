@@ -1,0 +1,24 @@
+syntax = "proto3";
+package serviceProto;
+
+service MessageService {
+    rpc sendMessage(Message) returns (Response);
+    rpc getMessages(ChatId) returns (Chat);
+}
+
+message Response{
+    string result = 1;
+}
+
+message ChatId{
+    string chatId = 1;
+}
+
+message Chat{
+    repeated Message messages = 1;
+}
+
+message Message {
+    string message = 1;
+    string userName = 2;
+}
