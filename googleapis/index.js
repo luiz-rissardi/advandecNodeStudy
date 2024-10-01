@@ -23,7 +23,7 @@ const authUrl = oauth2Client.generateAuthUrl({
     scope: SCOPES,
 });
 
-oauth2Client.
+// oauth2Client.getAccessToken();
 
 
 // Rota para iniciar o processo de autorização
