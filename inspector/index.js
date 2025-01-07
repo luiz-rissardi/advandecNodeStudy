@@ -1,8 +1,9 @@
 import { Session } from "inspector/promises"; // Correto
 import express, { Router } from "express";
 import { createServer } from "http";
-import { writeFile } from "fs/promises";
 import { Readable } from "stream";
+import { createWriteStream } from "fs";
+
 
 function cpuProfiling() {
     let _session
@@ -10,17 +11,19 @@ function cpuProfiling() {
         async start() {
             _session = new Session()
             _session.connect()
-            
+
             await _session.post('Profiler.enable')
             await _session.post('Profiler.start')
             console.log('started CPU Profiling')
         },
         async stop() {
-            console.log('stopping CPU Profiling')
+            console.log('stopping CPU Profiling');
+            
             const { profile } = await _session.post('Profiler.stop')
-            const profileName = `cpu-profile-${Date.now()}.cpuprofile`
-            await writeFile(profileName, JSON.stringify(profile));
+            createWriteStream('./cpu-profile.cpuprofile').write(JSON.stringify(profile));
+
             _session.disconnect()
+            process.exit(0);
         },
     }
 }
@@ -46,19 +49,19 @@ router.route("/teste/:n").get((req, res) => {
 
 app.use(router);
 
+const { start, stop } = cpuProfiling();
+
 server.listen(3000).on("listening", async () => {
+    start();
     console.log("Server is running at http://localhost:3000");
 });
 
-const { start, stop } = cpuProfiling();
-start();
 
 // Captura sinais do sistema para parar o profiler
 ["SIGINT", "SIGTERM", "SIGQUIT"].forEach(signal => {
     process.on(signal, async () => {
         console.log(`Recebido sinal ${signal}. Parando o servidor...`);
         await stop(); // Parada assíncrona do profiler
-        process.exit(0);
     });
 });
 
