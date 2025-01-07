@@ -2,7 +2,7 @@ import { Session } from "inspector/promises"; // Correto
 import express, { Router } from "express";
 import { createServer } from "http";
 import { writeFile } from "fs/promises";
-
+import { Readable } from "stream";
 
 function cpuProfiling() {
     let _session
@@ -40,7 +40,8 @@ router.route("/teste/:n").get((req, res) => {
     }
 
     const result = fatorial(parsedN);
-    res.json({ result });
+
+    Readable.from(result.toString()).pipe(res);
 });
 
 app.use(router);
@@ -68,3 +69,11 @@ function fatorial(n) {
     }
     return n === 0 ? 1 : n * fatorial(n - 1);
 }
+
+
+/**
+ * notações de testes, usar respostas sob demanda como Reable.from(result.toString()).pipe(res)
+ * faz o servidor responder mais clientes, mesmo os dados sendo apenas 1 numero ou poucos dados
+ * 
+ * usar res.write, ou res como writable***
+ */
