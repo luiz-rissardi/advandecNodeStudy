@@ -20,7 +20,6 @@ routes.route("/message/:chatId").get((req, res) => {
                 console.error(error);
             }
             res.json(response);
-
         });
     } catch (error) {
         console.log("error");

@@ -12,7 +12,7 @@
     "cluster": "nodemon cluster.js",
     "teste": "nodemon teste.js",
     "autocannon": "npx autocannon -c 5 -20 500 --debug http://localhost:4000/image?image=https://banner2.cleanpng.com/20180325/avw/kisspng-mbt-70-main-battle-tank-t-80-military-tanks-5ab7aaa9ad3e05.7725387315219862177096.jpg&background=https://wallpapers.com/images/hd/battlefield-background-x6shaan524hr7ev7.jpg",
-    "at":"npx autocannon -c 3000 -d 20 http://localhost:5000/message/3",
+    "at":"npx autocannon -c 1000 -d 20 http://localhost:3000/message/3",
     "memory": "nodemon ./memoryHeapNode/",
     "benchmarking": "node ./benchMarking/index.js",
     "start": "set CLIMEM=8999 && node -r climem ./performTestClass/index.js",
